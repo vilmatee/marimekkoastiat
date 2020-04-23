@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Astialista</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+      <h1>Astiat</h1>
+      
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-4">
+		<h3 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]!</h3>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+		</div>
+      <table class="table table-striped">
+      	<tbody>
+      	<tr>
+      	<th>Kuosi</th>
+      	<th>Väri</th>
+      	<th>Koko</th>
+      	<th>Hinta</th>
+      	<th>Kappalemäärä</th>
+      	<th>Kategoria</th>
+      	<th sec:authorize="hasAuthority('ADMIN')"></th>
+      	</tr>
+      	
+      	<tr th:each = "astia :${astiat}">
+      		<td th:text = "${astia.kuosi}"></td>
+      		<td th:text = "${astia.vari}"></td>
+      		<td th:text = "${astia.tilavuus}"></td>
+      		<td th:text = "${astia.hinta}+€"></td>
+      		<td th:text = "${astia.ostovuosi}"></td>
+      		<td th:text="${astia.category.name}"></td> 
+      		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${astia.id})}" class="btn btn-danger">Poista</a>
+      			<a th:href="@{/edit/{id}(id=${astia.id})}" class="btn btn-success">Muokkaa</a> 
+      		</tr>
+      	</tbody>
+      </table>
+      <a href="/lisaaastia" class="btn btn-primary">Lisää astia</a>
+</body>
+</html>
