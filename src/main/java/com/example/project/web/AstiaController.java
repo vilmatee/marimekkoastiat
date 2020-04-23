@@ -29,7 +29,7 @@ public class AstiaController {
 	//Tämä endpoint listaa astiat
 	@RequestMapping(value = "/astialista")
 	public String astiaLista(Model model) {
-		model.addAttribute("astiat", repository.findAll());
+		model.addAttribute("astiat", repository.findByOrderByKuosiAsc());
 		return "astialista";
 	}
 	//Tällä endpointilla voidaan lisätä uusia astioita
